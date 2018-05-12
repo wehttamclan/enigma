@@ -1,3 +1,4 @@
+require 'pry'
 
 class Enigma
 attr_reader :char_map, :characters
@@ -9,28 +10,27 @@ attr_reader :char_map, :characters
   def encrypt(plaintext)
     key = 99521
 
-    map_length = @characters.length # 39
-    a_rotation = key.to_s[0..1].to_i # 99
-    b_rotation = key.to_s[1..2].to_i # 95
-    c_rotation = key.to_s[2..3].to_i # 52
-    d_rotation = key.to_s[3..4].to_i # 21
-
+    map_length = characters.length # 39
+    a = key.to_s[0..1].to_i # 99
+    b = key.to_s[1..2].to_i # 95
+    c = key.to_s[2..3].to_i # 52
+    d = key.to_s[3..4].to_i # 21
+    rotations = [a, b, c, d]
     ciphertext = ""
-
-    plaintext.chars.to_a.each do |char|
-      char_position = char_map.key(char)
-      cipher_char_position = (char_position + a_rotation) % map_length
-      ciphertext += char_map[cipher_char_position]
+    plaintext.length.times do |x|
+      char_map_position = char_map.key(plaintext[x])
+      cipher_char_map_position =
+            (char_map_position + rotations[x % 4]) % map_length
+      ciphertext += char_map[cipher_char_map_position]
     end
-
-    p ciphertext
+    ciphertext
   end
 
 end
 
-# e = Enigma.new
-# my_message = "this is so secret ..end.."
-# e.encrypt(my_message)
+e = Enigma.new
+my_message = "this is so secret ..end.."
+p e.encrypt(my_message)
 
 
 # def decrypt (output, str, Date.today)
