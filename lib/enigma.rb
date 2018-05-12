@@ -4,6 +4,8 @@ class Enigma
     return ciphertext
   end
 
+  test
+
 end
 #
 # def initialize
