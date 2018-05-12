@@ -13,6 +13,7 @@ class EnigmaTest < Minitest::Unit::TestCase
     e = Enigma.new
     my_message = "this is so secret ..end.."
     output = e.encrypt(my_message)
+    assert_equal "b23as3asa9sazx,zbsttz8ytt", output
   end
 
   # def test_encryption_with_one_param
@@ -25,10 +26,5 @@ class EnigmaTest < Minitest::Unit::TestCase
   #   # @observer.verify
   # end
 
-  # def test
-  #
-  #
-  #
-  # end
 
 end # end class

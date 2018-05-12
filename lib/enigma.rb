@@ -1,92 +1,82 @@
 
 class Enigma
-attr_reader :char_map
+attr_reader :char_map, :characters
   def initialize
-    @char_map   = {1 => "a",
-                   2 => "b",
-                   3 => "c",
-                   4 => "d",
-                   5 => "e",
-                   6 => "f",
-                   7 => "g",
-                   8 => "h",
-                   9 => "i",
-                   10 => "j",
-                   11 => "k",
-                   12 => "l",
-                   13 => "m",
-                   14 => "n",
-                   15 => "o",
-                   16 => "p",
-                   17 => "q",
-                   18 => "r",
-                   19 => "s",
-                   20 => "t",
-                   21 => "u",
-                   22 => "v",
-                   23 => "w",
-                   24 => "x",
-                   25 => "y",
-                   26 => "z",
-                   27 => "0",
-                   28 => "1",
-                   29 => "2",
-                   30 => "3",
-                   31 => "4",
-                   32 => "5",
-                   33 => "6",
-                   34 => "7",
-                   35 => "8",
-                   36 => "9",
-                   37 => " ",
-                   38 => ".",
-                   39 => ","}
+    @characters = "abcdefghijklmnopqrstuvwxyz0123456789 .,"
+    @char_map = @characters.length.times.zip(characters.chars).to_h
   end
 
-  def encrypt#(plaintext)
+  def encrypt(plaintext)
     key = 99521
-    plaintext = "this is so secret ..end.."
 
-    mod = char_map.keys.length # 39
+    map_length = @characters.length # 39
     a_rotation = key.to_s[0..1].to_i # 99
     b_rotation = key.to_s[1..2].to_i # 95
     c_rotation = key.to_s[2..3].to_i # 52
     d_rotation = key.to_s[3..4].to_i # 21
-    # plaintext.chars
-    cipher_chars = []
+
+    ciphertext = ""
 
     plaintext.chars.to_a.each do |char|
-      cipher_chars <<  char_map[char_map.key(char) + a_rotation % char_map.keys.length]
+      char_position = char_map.key(char)
+      cipher_char_position = (char_position + a_rotation) % map_length
+      ciphertext += char_map[cipher_char_position]
     end
 
-    p cipher_chars
+    p ciphertext
   end
 
 end
 
-e = Enigma.new
-e.encrypt
+# e = Enigma.new
+# my_message = "this is so secret ..end.."
+# e.encrypt(my_message)
 
-#
-#
-# end
-#
-# char_map.keys.length
-#
-# def encrypt(my_message)
-#
-# end
-#
+
 # def decrypt (output, str, Date.today)
-#
 # end
 #
 # def crack (output, Date.today)
-#
 # end
 
-# digits = [1,2,3,4,5,6,7,8,9,0]
-#
-# 5.times do |x|
-#   digits.sample
-# end
+
+
+# @char_map   = {0 => "a",
+#                1 => "b",
+#                2 => "c",
+#                3 => "d",
+#                4 => "e",
+#                5 => "f",
+#                6 => "g",
+#                7 => "h",
+#                8 => "i",
+#                9 => "j",
+#                10 => "k",
+#                11 => "l",
+#                12 => "m",
+#                13 => "n",
+#                14 => "o",
+#                15 => "p",
+#                16 => "q",
+#                17 => "r",
+#                18 => "s",
+#                19 => "t",
+#                20 => "u",
+#                21 => "v",
+#                22 => "w",
+#                23 => "x",
+#                24 => "y",
+#                25 => "z",
+#                26 => "0",
+#                27 => "1",
+#                28 => "2",
+#                29 => "3",
+#                30 => "4",
+#                31 => "5",
+#                32 => "6",
+#                33 => "7",
+#                34 => "8",
+#                35 => "9",
+#                36 => " ",
+#                37 => ".",
+#                38 => ","}
