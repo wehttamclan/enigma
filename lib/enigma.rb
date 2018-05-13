@@ -53,6 +53,7 @@ end # end class
 # p e.encrypt(my_message, 41521, d.today)
 
 
+
 # def decrypt (output, str, Date.today)
 # end
 #
