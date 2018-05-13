@@ -9,16 +9,22 @@ class KeyGeneratorTest < Minitest::Test
     assert_instance_of KeyGenerator, keygen
   end
 
-  def test_if_valid_mac_address
-    skip
+  def test_convert_hex_to_decimal
     keygen = KeyGenerator.new
-    expected =
-    assert lines, what_do_i_put_here?, keygen.get_mac_address_from_shell
+    keygen.get_mac_address_from_shell
+
+    expected = 255
+    result = keygen.convert_hex_to_decimal('ff')
+    assert expected, result
   end
 
-  def test_convert_hex_to_decimal(mac_address)
+  def test_get_first_five
     keygen = KeyGenerator.new
-    keygen.convert_hex_to_decimal mac_address
+
+    result = keygen.get_first_five(123456)
+    expected = 12345
+    assert expected, result
+    # assert keygen.mac_address,
   end
 end
 
