@@ -1,6 +1,7 @@
 require 'MiniTest/autorun'
 require 'MiniTest/pride'
 require './lib/enigma'
+require 'MiniTest/mock'
 
 class EnigmaTest < Minitest::Unit::TestCase
 
@@ -19,15 +20,11 @@ class EnigmaTest < Minitest::Unit::TestCase
     assert_equal "3zxeh07w26meou633pnxo5sxi", output
   end
 
-  # def test_encryption_with_one_param
-  #   # @observer = MiniTest::Mock.new
-  #   # output = ""
-  #   # e = Enigma.new
-  #   # my_message = "this is so secret ..end.."
-  #   # @observer.expect(:changed, true, output)
-  #   # output = e.encrypt(my_message)
-  #   # @observer.verify
-  # end
+  def test_command_line_encrypt
+    smock = mock('name')
+  end
+
+  #object.expects(:method).returns("expected")
 
 
 end # end class
