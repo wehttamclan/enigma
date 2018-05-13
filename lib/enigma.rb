@@ -38,6 +38,10 @@ attr_reader :char_map, :characters
     ciphertext
   end
 
+  def command_line_encrypt(file)
+    ``
+  end
+
 end # end class
 
 
