@@ -13,5 +13,4 @@ class Encrypt
     ciphertext_file_name = ARGV[1]
     [plaintext_file_name, ciphertext_file_name]
   end
-
 end
