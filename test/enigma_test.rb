@@ -10,6 +10,12 @@ class EnigmaTest < Minitest::Unit::TestCase
     assert_instance_of Enigma, e
   end
 
+  def test_format_date_to_numeric
+  end
+
+  def test_return_correct_offset
+  end
+  
   def test_encryption
     e = Enigma.new  # key = 41521
     my_message = "this is so secret ..end.."
