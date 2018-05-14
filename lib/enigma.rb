@@ -11,36 +11,42 @@ attr_reader :char_map, :characters
 
   def encrypt(plaintext, key=41521, date=0)
     rotations = []
-    offset = offset(date)
+    offset = calc_offset(date)
     4.times { |x| rotations << key.to_s[x..x+1].to_i + offset[x] }
-    cipher(plaintext, rotations)
+    cipher(plaintext, rotations, 1)
   end
 
-  def offset(date)
+  def decrypt(encrypted_text, key=41521, date=0)
+    rotations = []
+    offset = calc_offset(date)
+    4.times { |x| rotations << key.to_s[x..x+1].to_i + offset[x] }
+    cipher(encrypted_text, rotations, -1)
+  end
+
+  def calc_offset(date)
     if date > 0
-      (date**2).to_s[-4..-1].chars.map { |x| x.to_i }
+      (date**2).to_s[-4..-1].chars.map { |digit| digit.to_i }
     else
       000000
     end
   end
 
-  def cipher(plaintext, rotations)
+  def cipher(input_text, rotations, i)
     map_length = characters.length # 39
-    ciphertext = ""
+    output_text = ""
 
-    plaintext.length.times do |x|
-      char_map_position = char_map.key(plaintext[x])
+    input_text.length.times do |x|
+      char_map_position = char_map.key(input_text[x])
       cipher_char_map_position =
-            (char_map_position + rotations[x % 4]) % map_length
-      ciphertext += char_map[cipher_char_map_position]
+            (i*i*char_map_position + i*rotations[x % 4]) % map_length
+      output_text += char_map[cipher_char_map_position]
     end
-
-    ciphertext
+    output_text
   end
 
-  def command_line_encrypt(file)
-    ``
-  end
+
+
+
 
 end # end class
 
@@ -50,19 +56,17 @@ end # end class
 
 
 
-# e = Enigma.new
-# d = Date.new
-# my_message = "this is so secret ..end.."
-# p e.encrypt(my_message)
-# p e.encrypt(my_message, 41521, d.today)
+e = Enigma.new
+my_message = "this is so secret ..end.."
+
+key = 12345
+d = Date.new
+
+p my_message = e.encrypt(my_message, key, d.today)
+p e.decrypt(my_message, key, d.today)
 
 
 
-# def decrypt (output, str, Date.today)
-# end
-#
-# def crack (output, Date.today)
-# end
 
 
 
