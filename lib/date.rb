@@ -1,15 +1,16 @@
 class Date
-attr_reader :t
+attr_reader :time
 
   def initialize
-    @t = Time.now
+    @time = Time.now
   end
 
   def today
-    (t.strftime "%d%m%y").to_i
+    (time.strftime "%d%m%y").to_i
   end
 
 end
+
 
 
 # p Date.new.today
