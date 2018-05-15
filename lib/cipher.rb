@@ -23,6 +23,9 @@ module Cipher
   end
 
   def cipher(input_text, rotations, i)
+    characters = "abcdefghijklmnopqrstuvwxyz0123456789 .,"
+    char_map = characters.length.times.zip(characters.chars).to_h
+
     map_length = characters.length # 39
     output_text = ""
 
