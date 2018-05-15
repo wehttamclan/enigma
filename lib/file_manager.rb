@@ -1,13 +1,16 @@
-module FileManager
+class FileManager
 
   def assign_filenames
-    plaintext = ARGV[0]
-    ciphertext = ARGV[1]
-    [plaintext, ciphertext]
+    input_text_file = ARGV[0]
+    output_text_file = ARGV[1]
+    [input_text_file, output_text_file]
   end
 
-  def open_plaintext_file
-    content = File.read('./message.txt')
-    File.write('./encrypted.txt', 'content goes here')
+  def open_file(file = assign_filenames[0])
+    IO.read(file).chomp
+  end
+
+  def write_file(output_file = assign_filenames[1], output_text)
+    IO.write(output_file, output_text)
   end
 end
