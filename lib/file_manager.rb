@@ -6,7 +6,7 @@ class FileManager
     [input_text_file, output_text_file]
   end
 
-  def open_file(file = assign_filenames[0])
+  def read_file(file = assign_filenames[0])
     IO.read(file).chomp
   end
 

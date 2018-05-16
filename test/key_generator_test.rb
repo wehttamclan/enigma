@@ -9,28 +9,20 @@ class KeyGeneratorTest < Minitest::Test
     assert_instance_of KeyGenerator, keygen
   end
 
-  def test_if_mac_address_is_right_length
+  def test_if_rotations_method_returns_rotations
     keygen = KeyGenerator.new
-    num = keygen.convert_hex_to_decimal
-    assert num > 0000000000000001
-    assert num < 18446744073709551615 # FFFFFFFFFFFFFFFF
+    result = keygen.rotations(12345)
+    expected = [12, 23, 34, 45]
+
+    assert_equal expected, result
   end
 
-  def test_convert_hex_to_decimal
+  def test_if_calc_offset_method_returns_correct_offset
     keygen = KeyGenerator.new
-    keygen.get_mac_address_from_shell
+    result = keygen.calc_offset(160518)
+    expected = [8324]
 
-    expected = 255
-    result = keygen.convert_hex_to_decimal('ff')
-    assert expected, result
+    assert_equal expected, result
   end
 
-  def test_get_first_five
-    keygen = KeyGenerator.new
-
-    result = keygen.get_first_five(123456)
-    expected = 12345
-    assert expected, result
-    # assert keygen.mac_address,
-  end
 end
