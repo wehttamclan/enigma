@@ -1,28 +1,26 @@
 class KeyGenerator
 
   def key
-    mac_address = get_mac_address_from_shell
-    hex = convert_hex_to_decimal(mac_address)
-    first_five = get_first_five(mac_address)
+    (Time.now.strftime "%H%m%S")[-5..-1].to_i
   end
 
-  def get_mac_address_from_shell
-    `ifconfig en0 | grep -e "ether" | cut -d ' ' -f 2 | tr -d ':'`
-  end
-
-  def convert_hex_to_decimal(mac_address)
-    mac_address = mac_address.to_i(16)
-  end
-
-  def get_first_five(mac_address)
-    mac_address = mac_address.to_s[0..4].to_i
+  def rotations(key)
+    rotations = []
+    key = key.to_s
+    4.times do |digit|
+      rotations << key[digit..digit + 1].to_i
+    end
+    rotations
   end
 
   def calc_offset(date)
-    if date > 0
-      (date**2).to_s[-4..-1].chars.map { |digit| digit.to_i }
-    else
-      000000
-    end
+    date_squared = (date**2).digits
+    date_squared.reverse[-4..-1]
   end
 end
+
+
+
+# keygen = KeyGenerator.new
+# p keygen.key
+# p keygen.rotations(keygen.key)

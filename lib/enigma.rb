@@ -2,31 +2,32 @@ require './lib/date'
 require './lib/key_generator'
 
 class Enigma
-  attr_reader :char_map, :characters, :keygen
+  attr_reader :char_map, :characters, :keygen, :new_key, :offset
 
   def initialize
     @characters = "abcdefghijklmnopqrstuvwxyz0123456789 .,"
     @char_map = characters.length.times.zip(characters.chars).to_h
     @keygen = KeyGenerator.new
+    @offset = @keygen.calc_offset(date_today)
   end
 
   def date_today
     Date.new.today
   end
 
-  def encrypt(plaintext, key=41521, today=date_today)
-    rotations = []
-    offset = keygen.calc_offset(today)
-    #rename x, clean up line
-    4.times { |x| rotations << key.to_s[x..x+1].to_i + offset[x] }
-    cipher(plaintext, rotations, 1)
+  def total_shift
+    rotations = keygen.rotations(keygen.key)
+    shift = []
+    4.times { |num| shift << (rotations[num] + offset[num]) }
+    shift
   end
 
-  def decrypt(encrypted_text, key=41521, today=date_today)
-    rotations = []
-    offset = keygen.calc_offset(today)
-    4.times { |x| rotations << key.to_s[x..x+1].to_i + offset[x] }
-    cipher(encrypted_text, rotations, -1)
+  def encrypt(plaintext, key=keygen.key, today=date_today)
+    cipher(plaintext, total_shift, 1)
+  end
+
+  def decrypt(encrypted_text, key=keygen.key, today=date_today)
+    cipher(encrypted_text, total_shift, -1)
   end
 
   def cipher(input_text, rotations, i)
@@ -43,6 +44,10 @@ class Enigma
   end
 end # end class
 
-# 3ztw3d6zx53ek,6g2p637pxeh.w3h43e3p9,nw6dk.t2h6uwk30w3ztwn02a2s9d2
-# p e.decrypt(var)
-# tyrannosaur
+# e = Enigma.new
+# message = "this is so secret ..end.."
+# p new_key = e.keygen.key
+# p ciphertext = e.encrypt(message, key=new_key)
+# p e.decrypt(ciphertext, key=new_key)
+# p e.keygen.rotations(e.keygen.key)
+# p e.offset
