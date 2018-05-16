@@ -7,9 +7,8 @@ class Crack
   end
 
   def calc(hash)
-    f = FileManager.new
+    encrypted_str = IO.read(file).chomp
     end_str = ".end"
-    encrypted_str = f.open_file
   end
 
   def permutate
