@@ -6,8 +6,7 @@ require './lib/date'
 e = Enigma.new
 f = FileManager.new
 keygen = KeyGenerator.new
-key = keygen.key
-encrypted_message = f.open_file
+encrypted_message = f.read_file
 key = ARGV[2] # key
 date = ARGV[3] # date
 decrypted_message = e.decrypt(encrypted_message, key, date)
