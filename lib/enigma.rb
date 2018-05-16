@@ -19,37 +19,41 @@ class Enigma
     Date.new.today
   end
 
-  def total_shift
-    rotations = keygen.rotations(keygen.key)
+  def total_shift(key)
+    rotations = keygen.rotations(key)
     shift = []
     4.times { |num| shift << (rotations[num] + offset[num]) }
     shift
   end
 
   def encrypt(plaintext, key=keygen.key, today=date_today)
+    total_shift = total_shift(key)
     cipher(plaintext, total_shift, 1)
   end
 
   def decrypt(encrypted_text, key=keygen.key, today=date_today)
+    total_shift = total_shift(key)
     cipher(encrypted_text, total_shift, -1)
   end
 
-  def cipher(input_text, rotations, i)
+  def cipher(input_text, total_shift, i)
     map_length = char_map.length # 39
     output_text = ""
 
     input_text.length.times do |x|
       char_map_position = char_map.key(input_text[x])
       cipher_char_map_position =
-            (i*i*char_map_position + i*rotations[x % 4]) % map_length
+            (i*i*char_map_position + i*total_shift[x % 4]) % map_length
       output_text += char_map[cipher_char_map_position]
     end
     output_text
   end
 end # end class
 
-e = Enigma.new
-p e.characters
+
+
+# e = Enigma.new
+# p e.char_map
 # message = "this is so secret ..end.."
 # p new_key = e.keygen.key
 # p ciphertext = e.encrypt(message, key=new_key)
