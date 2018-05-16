@@ -2,6 +2,7 @@ require 'MiniTest/autorun'
 require 'MiniTest/pride'
 require './lib/enigma'
 require 'MiniTest/mock'
+require './lib/key_generator'
 
 class EnigmaTest < Minitest::Unit::TestCase
 
@@ -15,7 +16,7 @@ class EnigmaTest < Minitest::Unit::TestCase
 
   def test_return_correct_offset
   end
-  
+
   def test_encryption
     e = Enigma.new  # key = 41521
     my_message = "this is so secret ..end.."

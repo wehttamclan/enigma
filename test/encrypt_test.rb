@@ -1,22 +1,16 @@
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/encrypt'
-require './lib/cipher'
 require './lib/date'
 
 class EncryptTest < Minitest::Test
 
   def test_encryption_with_different_params
-    e = Encrypt.new
-    assert_equal e.encrypt("sdasfd"), "2vpepv"
-    assert_equal e.encrypt("..end.."), "2vpepv"
-    p e.encrypt("hippopatamus", 12345)
-    p e.decrypt("18mz8c 3u,r2", 12345)
-  end
-
-  def test_if_encrypt_class_exists
-    encrypt = Encrypt.new
-    assert_instance_of Encrypt, encrypt
+    e = Enigma.new
+    assert_equal "2vpepv", e.encrypt("sdasfd")
+    assert_equal "iqt,nqn", e.encrypt("..end..")
+    # p e.encrypt("hippopatamus", 12345)
+    # p e.decrypt("18mz8c 3u,r2", 12345)
   end
 
   def test_check_corect_num_arguments
