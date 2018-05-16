@@ -12,8 +12,6 @@ class EnigmaTest < Minitest::Unit::TestCase
     assert_equal 6, d.length
   end
 
-
-
   def test_return_correct_offset
     e = Enigma.new
     output = e.calc_offset(0)
