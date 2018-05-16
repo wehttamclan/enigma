@@ -10,3 +10,5 @@ my_message = f.open_file
 encrypted_message = e.encrypt(my_message)
 f.write_file(encrypted_message)
 #3zxeh07w26meou633pnxo5sxi
+
+# print the key to the terminal so decrypt can use it.

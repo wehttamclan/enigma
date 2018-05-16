@@ -2,10 +2,10 @@ require './lib/date'
 require './lib/key_generator'
 
 class Enigma
-  attr_reader :char_map, :characters, :keygen, :new_key, :offset
+  attr_reader :char_map, :characters, :keygen, :offset
 
   def initialize
-    @characters = "abcdefghijklmnopqrstuvwxyz0123456789 .,"
+    @characters = (' '..'z').to_a.join
     @char_map = characters.length.times.zip(characters.chars).to_h
     @keygen = KeyGenerator.new
     @offset = @keygen.calc_offset(date_today)
@@ -45,6 +45,7 @@ class Enigma
 end # end class
 
 # e = Enigma.new
+# p e.characters
 # message = "this is so secret ..end.."
 # p new_key = e.keygen.key
 # p ciphertext = e.encrypt(message, key=new_key)
