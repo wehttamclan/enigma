@@ -1,18 +1,16 @@
 require 'minitest/autorun'
 require 'minitest/pride'
-require './lib/encrypt.rb'
+require './lib/encrypt'
+require './lib/date'
 
 class EncryptTest < Minitest::Test
 
-  def test_if_encrypt_class_exists
-    encrypt = Encrypt.new
-    assert_instance_of Encrypt, encrypt
-  end
-
-  def test_files_exist
-    result = `ruby ./lib/encrypt.rb message.txt encrypted.txt`
-    assert File.exist?('./encrypted.txt') # okay with this failing for now
-    assert File.exist?('./message.txt')
+  def test_encryption_with_different_params
+    e = Enigma.new
+    assert_equal "2vpepv", e.encrypt("sdasfd")
+    assert_equal "iqt,nqn", e.encrypt("..end..")
+    # p e.encrypt("hippopatamus", 12345)
+    # p e.decrypt("18mz8c 3u,r2", 12345)
   end
 
   def test_check_corect_num_arguments
@@ -24,5 +22,11 @@ class EncryptTest < Minitest::Test
     result_2 =  `ruby ./lib/encrypt.rb message.txt`
     expected_2 = "Incorect number of arguments. Please try again: "
     assert expected_2, result_2
+
+    def test_correct_num_args_from_command_line
+      if ARGV.length != 2
+        print "Incorrect number of arguments. Please try again: "
+      end
+    end
   end
 end
