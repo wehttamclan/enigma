@@ -5,30 +5,41 @@ require 'MiniTest/mock'
 
 class EnigmaTest < Minitest::Unit::TestCase
 
-  def test_if_enigma_class_exists
-    e = Enigma.new
-    assert_instance_of Enigma, e
+  def test_format_date
+    d = Date.new.today
+    assert_instance_of Integer, d
+    assert_equal 6, d.length
   end
 
-  def test_format_date_to_numeric
-  end
+
 
   def test_return_correct_offset
-  end
-  
-  def test_encryption
-    e = Enigma.new  # key = 41521
-    my_message = "this is so secret ..end.."
-    output = e.encrypt(my_message)
-    assert_equal "vwva,x5su3kagr4zvmltg2qta", output
-    d = Date.new
-    output = e.encrypt(my_message, 41521, d.today)
-    assert_equal "3zxeh07w26meou633pnxo5sxi", output
+    e = Enigma.new
+    output = e.calc_offset(0)
+    expected = [0, 0, 0, 0]
+    assert_equal expected, output
+
+
+    date = 150518 # May 15, 2018
+    output = e.calc_offset(date.today)
+    expected = [8, 3, 2, 4] # May 15, 2018 -> (150518**2).digits.reverse[-4..-1]
+    assert_equal expected, output
   end
 
-  def test_command_line_encrypt
-    smock = mock('name')
+  def test_encryption
+    skip
+    e = Enigma.new
+    key = 41521
+    my_message = "a"
+    a_rotation = e.char_map.key(41)
+
+    output = e.encrypt(my_message)
+    assert_equal a_rotation, output
   end
+
+  # def test_command_line_encrypt
+  #   smock = mock('name')
+  # end
 
   #object.expects(:method).returns("expected")
 

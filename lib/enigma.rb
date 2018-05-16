@@ -2,32 +2,34 @@ require './lib/date'
 require 'pry'
 
 class Enigma
-attr_reader :char_map, :characters
+attr_reader :char_map, :characters, :date_offset
 
   def initialize
     @characters = "abcdefghijklmnopqrstuvwxyz0123456789 .,"
     @char_map = @characters.length.times.zip(characters.chars).to_h
+    @date_offset = Date.new # move this to a module?
   end
 
-  def encrypt(plaintext, key=41521, date=0)
+  def encrypt(plaintext, key=41521, date_offset=0)
     rotations = []
-    offset = calc_offset(date)
+    offset = calc_offset(date_offset)
     4.times { |x| rotations << key.to_s[x..x+1].to_i + offset[x] }
     cipher(plaintext, rotations, 1)
   end
 
-  def decrypt(encrypted_text, key=41521, date=0)
+  def decrypt(encrypted_text, key=41521, date_offset=0)
     rotations = []
-    offset = calc_offset(date)
+    offset = calc_offset(date_offset)
     4.times { |x| rotations << key.to_s[x..x+1].to_i + offset[x] }
     cipher(encrypted_text, rotations, -1)
   end
 
   def calc_offset(date)
     if date > 0
-      (date**2).to_s[-4..-1].chars.map { |digit| digit.to_i }
+      # (date**2).to_s[-4..-1].chars.map { |digit| digit.to_i }
+      (date**2).digits.reverse[-4..-1]#.map { |digit| digit.to_i }
     else
-      000000
+      [0, 0, 0, 0]
     end
   end
 
@@ -45,25 +47,21 @@ attr_reader :char_map, :characters
   end
 
 
-
-
-
 end # end class
 
 
 
 
-
-
-
 e = Enigma.new
-my_message = "this is so secret ..end.."
+my_message = "birdbird"#{}"this is so secret ..end.."
 
-key = 12345
+key = 99999
 d = Date.new
+p d.today
+p e.calc_offset(d.today)
 
-p my_message = e.encrypt(my_message, key, d.today)
-p e.decrypt(my_message, key, d.today)
+p my_message = e.encrypt(my_message)
+p e.decrypt(my_message)
 
 
 
