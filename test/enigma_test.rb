@@ -4,12 +4,17 @@ require './lib/enigma'
 require 'MiniTest/mock'
 require './lib/key_generator'
 
-class EnigmaTest < Minitest::Unit::TestCase
+class EnigmaTest < Minitest::Test
 
-  def test_format_date
-    d = Date.new.today
-    assert_instance_of Integer, d
-    assert_equal 6, d.length
+  def test_encryption
+    e = Enigma.new
+    key = 41521
+    date = Date.new
+    my_message = "a"
+    a_rotation = e.char_map.key(41)
+
+    output = e.encrypt(my_message)
+    assert_equal a_rotation, output
   end
 
   def test_return_correct_offset
@@ -24,23 +29,4 @@ class EnigmaTest < Minitest::Unit::TestCase
     expected = [8, 3, 2, 4] # May 15, 2018 -> (150518**2).digits.reverse[-4..-1]
     assert_equal expected, output
   end
-
-  def test_encryption
-    skip
-    e = Enigma.new
-    key = 41521
-    my_message = "a"
-    a_rotation = e.char_map.key(41)
-
-    output = e.encrypt(my_message)
-    assert_equal a_rotation, output
-  end
-
-  # def test_command_line_encrypt
-  #   smock = mock('name')
-  # end
-
-  #object.expects(:method).returns("expected")
-
-
 end # end class

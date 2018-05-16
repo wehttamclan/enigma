@@ -5,7 +5,11 @@ class Enigma
   attr_reader :char_map, :characters, :keygen, :offset
 
   def initialize
-    @characters = (' '..'z').to_a.join
+    lowercase = ('a'..'z').to_a.join
+    uppercase = ('A'..'Z').to_a.join
+    numbers = (0..9).to_a.join
+    symbols = ' !@#$%^&*()[],.<>;:/?\|'
+    @characters = lowercase + uppercase + numbers + symbols
     @char_map = characters.length.times.zip(characters.chars).to_h
     @keygen = KeyGenerator.new
     @offset = @keygen.calc_offset(date_today)
@@ -44,8 +48,8 @@ class Enigma
   end
 end # end class
 
-# e = Enigma.new
-# p e.characters
+e = Enigma.new
+p e.characters
 # message = "this is so secret ..end.."
 # p new_key = e.keygen.key
 # p ciphertext = e.encrypt(message, key=new_key)
