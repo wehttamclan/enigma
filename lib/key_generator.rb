@@ -1,14 +1,17 @@
 class KeyGenerator
 
   def key
-    (Time.now.strftime "%H%m%S")[-5..-1].to_i
+    key = []
+    5.times do
+      key << rand(0..9).to_s # accounts for leading zero
+    end
   end
 
   def rotations(key)
     rotations = []
     key = key.to_s
-    4.times do |digit|
-      rotations << key[digit..digit + 1].to_i
+    4.times do |index| # 0, 1, 2, 3
+      rotations << key[index..index + 1].to_i
     end
     rotations
   end
