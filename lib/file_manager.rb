@@ -1,5 +1,4 @@
 class FileManager
-
   def assign_filenames
     input_text_file = ARGV[0]
     output_text_file = ARGV[1]
