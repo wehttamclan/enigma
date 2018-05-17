@@ -5,6 +5,19 @@ require 'MiniTest/mock'
 require './lib/key_generator'
 
 class EnigmaTest < Minitest::Test
+  def test_total_shift
+    e = Enigma.new
+    key = 41521
+    date = 150518           # May 15, 2018
+    offsets = [8, 3, 2, 4]  # last four ditits of date**2
+    a = 41 + 8
+    b = 15 + 3
+    c = 52 + 2
+    d = 21 + 4
+    expected = [a, b, c, d]
+    output = e.total_shift(key)
+    assert_equal expected, output
+  end
 
   def test_encrpyt_one_letter
     e = Enigma.new
@@ -44,7 +57,7 @@ class EnigmaTest < Minitest::Test
 
   def test_encrypt_words_longer_than_four
     e = Enigma.new
-    key = 41521
+    key = "41521"
     date = 150518           # May 15, 2018
     my_message = 'birdbird'  # "bird" is known to enrpyt to "YA(C"
     output = e.encrypt(my_message, key, date)
@@ -57,12 +70,11 @@ class EnigmaTest < Minitest::Test
     key = 41521
     date = 150518           # May 15, 2018
     offsets = [8, 3, 2, 4]  # last four ditits of date**2
-    my_message = '9/?'     # char positions are 61, 81, 82.
+    my_message = '9/?'      # char positions are 61, 81, 82.
     # total shift is first and second digits of key plus offset.
     # 9's total shift = 41 + 8 = 49
     # /'s total shift = 15 + 3 = 18
     # ?'s total shift = 52 + 2 = 54
-
     output = e.encrypt(my_message, key, date)
     nine_expected = e.char_map[25]  # 25 = (61 + 49) % 85
     slash_expected = e.char_map[14]  # 14 = (81 + 18) % 85
@@ -73,19 +85,39 @@ class EnigmaTest < Minitest::Test
     assert_equal question_mark_expected, output[2]
   end
 
-  def test_total_shift
+  def test_decrypt_with_known_ciphertext_known_key
     e = Enigma.new
     key = 41521
-    date = 150518           # May 15, 2018
-    offsets = [8, 3, 2, 4]  # last four ditits of date**2
-    a = 41 + 8
-    b = 15 + 3
-    c = 52 + 2
-    d = 21 + 4
-    expected = [a, b, c, d]
-    output = e.total_shift(key)
-    assert_equal expected, output
+    original_message = "bird"
+    ciphertext = "YA(C"
+    decrypted_text = e.decrypt(ciphertext, key)
+    assert_equal original_message, decrypted_text
   end
 
+  def test_encrypt_decrypt_with_random_key
+    e = Enigma.new
+    key = e.keygen.key
+    original_message = "this 1s 5o secret? ..end.."
+    ciphertext = e.encrypt(original_message, key)
+    decrypted_text = e.decrypt(ciphertext, key)
+    assert_equal original_message, decrypted_text
+  end
 
-end # end class
+  def test_cipher_shifts_known_plaintext
+    e = Enigma.new
+    plaintext = "bird"
+    shift = [49, 18, 54, 25]  # using key 41521 and date 150518
+    expected_ciphertext = "YA(C"
+    ciphertext = e.cipher(plaintext, shift, 1)
+    assert_equal expected_ciphertext, ciphertext
+  end
+
+  def test_cipher_shifts_known_ciphertext
+    e = Enigma.new
+    expected_plaintext = "bird"
+    shift = [49, 18, 54, 25]  # using key 41521 and date 150518
+    known_ciphertext = "YA(C"
+    ciphertext = e.cipher(known_ciphertext, shift, -1)
+    assert_equal expected_plaintext, ciphertext
+  end
+end
