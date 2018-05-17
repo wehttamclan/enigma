@@ -1,7 +1,5 @@
-require 'MiniTest/autorun'
-require 'MiniTest/pride'
+require './test/test_helper'
 require './lib/enigma'
-require 'MiniTest/mock'
 require './lib/key_generator'
 
 class EnigmaTest < Minitest::Test

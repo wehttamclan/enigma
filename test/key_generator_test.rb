@@ -1,9 +1,7 @@
-require 'minitest/autorun'
-require 'minitest/pride'
+require './test/test_helper'
 require './lib/key_generator'
 
 class KeyGeneratorTest < Minitest::Test
-
   def test_if_key_generator_class_exists
     keygen = KeyGenerator.new
     assert_instance_of KeyGenerator, keygen
@@ -20,9 +18,8 @@ class KeyGeneratorTest < Minitest::Test
   def test_if_calc_offset_method_returns_correct_offset
     keygen = KeyGenerator.new
     result = keygen.calc_offset(160518)
-    expected = [8324]
+    expected = [8, 3, 2, 4]
 
     assert_equal expected, result
   end
-
 end
