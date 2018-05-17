@@ -10,4 +10,4 @@ my_message = f.read_file
 encrypted_message = e.encrypt(my_message, key)
 f.write_file(encrypted_message)
 puts "Created #{f.assign_filenames[1]} with the key #{key} and date "\
- + "#{e.date_today}"
+ + e.date_today.to_s
