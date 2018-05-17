@@ -18,7 +18,7 @@ class KeyGeneratorTest < Minitest::Test
   def test_if_calc_offset_method_returns_correct_offset
     keygen = KeyGenerator.new
     result = keygen.calc_offset(160518)
-    expected = [8, 3, 2, 4]
+    expected = "8324"
 
     assert_equal expected, result
   end
