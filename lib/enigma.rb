@@ -22,7 +22,7 @@ class Enigma
   def total_shift(key)
     rotations = keygen.rotations(key)
     shift = []
-    4.times { |num| shift << (rotations[num] + offset[num]) }
+    4.times { |num| shift << rotations[num] + offset[num] }
     shift
   end
 
@@ -45,19 +45,7 @@ class Enigma
       cipher_char_map_position =
             (i*i*char_map_position + i*shift[x % 4]) % map_length
       output_text += char_map[cipher_char_map_position]
-      # require 'pry'; binding.pry
     end
     output_text
   end
 end
-
-
-
-e = Enigma.new
-p k = e.keygen.key
-# p e.keygen.rotations(k)
-# p e.offset
-# p e.total_shift(k)
-message = "1234567890qwertyuiop[]asdfghjkl;zxcvbnm,. !@#$%^&*()[],.<>;:/?\|"
-p ciphertext = e.encrypt(message, key = k)
-p e.decrypt(ciphertext, key = k)
