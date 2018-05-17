@@ -1,3 +1,7 @@
+require './lib/enigma'
+require 'pry'
+require 'Date'
+
 class KeyGenerator
   def key
     key = []
@@ -16,8 +20,16 @@ class KeyGenerator
     rotations
   end
 
-  def calc_offset(date)
+  def calc_offset(date = Date.today)
+    if date == Date.today
+      date = modify_date
+    end
+    # binding.pry
     date_squared = (date**2).digits
-    date_squared.reverse[-4..-1]
+    date_squared.reverse[-4..-1].join
+  end
+
+  def modify_date
+      (Time.now.strftime '%d%m%y').to_i
   end
 end

@@ -1,4 +1,4 @@
 require './lib/enigma'
 
 e = Enigma.new
-e.crack
+e.crack(ARGV[0])
